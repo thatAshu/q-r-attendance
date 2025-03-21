@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Based Attendance System</title>
+    <link rel="stylesheet" href="{% static 'FacultyView/Index_Style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+ <style>
+ ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #013a63;
+ }
+
+ li {
+  float: left;
+ }
+
+ li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+ }
+
+ li a:hover:not(.active) {
+  background-color:#89C2C7 ;
+ }
+
+ .active {
+  background-color: #04AA6D;
+ }
+
+
+
+
+ section {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #89C2C7;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h3 {
+    color: #333;
+}
+
+.notice-board {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 110px;
+    margin-right: 118px;
+}
+
+.notice {
+    flex: 0 0 calc(33.33% - 20px);
+    margin: 10px;
+    padding: 30px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+.notice:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .notice {
+        flex: 0 0 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .notice {
+        flex: 0 0 100%;
+    }
+}
+h4{
+  color: #fff;
+    width: 100%;
+    background-color: #013a63;
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+}
+h5{
+  color: #fff;
+    width: 100%;
+    background-color: #013a63;
+    text-align: center;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+main{
+  margin-top: 110px;
+} 
+</style>
+   </head>
+  <body>
+   <header class="sticky">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#news">Events</a></li>
+        <li><a href="#contact">About Us</a></li>
+        <li><a href="#about">Contact</a></li>
+      </ul>
+      <h1>Dronacharya Group of Institutions</h1>
+      <h2>Attendance Portal</h2>
+    </header>
+    <main>
+      <div class="marked-list">
+        <h2>Present Count : {{ students|length }}</h2>
+        <h3 class="present-list">Present Students</h3>
+
+        <form class="attendance-form" method="POST">
+          <ul class="student-list">
+            {% csrf_token %} {% for student in students %}
+            <li class="student">
+              <label class="student-label">
+                <span class="student-name">
+                <!-- {{student.s_roll}} - {{ student.s_fname }} {{student.s_lname}}-->
+                </span>
+                <button
+                  type="submit"
+                  name="student_id"
+                  value="{{student.s_roll}}"
+                  class="delete-button"
+                >
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </label>
+            </li>
+            {% endfor %}
+          </ul>
+        </form>
+        <a href="{% url 'add_manually' %}"><button>+ Add Manually</button></a>
+        <a href="/"><button>✔ Submit</button></a>
+      </div>
+      <div class="attendance-container">
+        <div class="attendance-card">
+          <h2>
+            Connect to College Wi-Fi and Scan the QR Code to Mark Attendance
+          </h2>
+          {% comment %}
+          <a href="{% url 'add_manually' %}">
+            {% endcomment %}
+            <img
+              src="{% static 'FacultyView/qrcode.png' %}"
+              alt="QR Code"
+              width="200"
+              height="200"
+            />
+          </a>
+          <p class="hint">Please scan the QR code to mark your attendance.</p>
+        </div>
+      </div>
+    </main>
+    <section id="notices" class="notice-board">
+      <h4>Notice Board</h4>
+
+      <div class="notice">
+          <h5>Notice 1</h5>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia laborum pariatur odio in beatae laudantium rem voluptates!</p>
+      </div>
+
+      <div class="notice">
+          <h5>Notice 2</h5>
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur, similique ducimus! Ducimus voluptas provident temporibus.</p>
+      </div>
+
+      <div class="notice">
+          <h5>Notice 3</h5>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quod, ipsum error nesciunt non ducimus!</p>
+      </div>
+      <div class="notice">
+          <h5>Notice 3</h5>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint quos corporis repudiandae necessitatibus voluptate aut?</p>
+      </div>
+      <div class="notice">
+        <h5>Notice 3</h5>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+    </div>
+    <div class="notice">
+      <h5>Notice 3</h5>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime facere at </p>
+  </div>
+
+
+      <!-- Add more notice elements as needed -->
+  </section>
+    <footer>
+      <p>&copy; QR Based Attendance System 2023 - Team Cosmo</p>
+    </footer>
+  </body>
+</html>

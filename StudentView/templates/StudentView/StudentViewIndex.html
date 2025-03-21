@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>College Attendance Portal</title>
+    <link rel="stylesheet" href="{% static 'StudentView/Index_Style.css' %}" />
+    <style>
+
+
+body {font-family: Arial, Helvetica, sans-serif;}
+form {border: 3px solid #f1f1f1;}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #013a63;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer1 {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container1 {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+
+
+
+main{
+  display: flex;
+    justify-items: center;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2em;
+    height: 100vh;
+}
+
+.container{
+  padding: 16px;
+    text-align: center;
+    width: 30em;
+}
+
+.login{
+  display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 30em;
+    margin-right: 25px;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+
+
+
+
+
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="header-title">Dronacharya Group of Institutions</h1>
+      <h2>Attendance Portal</h2>
+    </header>
+    <main>
+    <div class="container">
+      <section class="attendance-section">
+        <h2 class="section-title">Select Your Name</h2>
+        <form
+          class="attendance-form"
+          method="POST"
+          action="{% url 'add_manually_post' %}"
+        >
+          {% csrf_token %}
+          <ul class="student-list">
+            {% for student in students %}
+            <li class="student">
+              <label class="student-label">
+                <span>
+               <!--   {{student.s_roll}} - {{ student.s_fname }} {{student.s_lname}}-->
+                </span>
+                <span class="checkmark"></span>
+                <input
+                  type="checkbox"
+                  class="student-checkbox"
+                  name="student-name"
+                  value="{{student.s_roll}}"
+                />
+              </label>
+            </li>
+            {% endfor %}
+          </ul>
+          <button type="submit" class="submit-button">Submit</button>
+        </form>
+      </section>
+    </div>
+
+
+
+
+    <form  class="login" action="/action_page.php" method="post">
+      <div class="container1">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname" required>
+    
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+            
+        <button type="submit">Login</button>
+        <label>
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+      </div>
+    
+      <div class="container1" style="background-color:#f1f1f1">
+        <button type="button" class="cancelbtn">Cancel</button>
+        <span class="psw">Forgot <a href="#">password?</a></span>
+      </div>
+    </form>
+    
+
+
+
+
+
+
+    </main>
+    <footer class="footer">
+      <p>&copy; QR Based Attendance System 2023 - Team Cosmo</p>
+    </footer>
+
+    <script>
+      const checkboxes = document.querySelectorAll(".student");
+
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          checkboxes.forEach((otherCheckbox) => {
+            if (otherCheckbox !== checkbox) {
+              otherCheckbox.querySelector(".student-checkbox").checked = false;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
